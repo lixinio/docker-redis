@@ -7,6 +7,4 @@ RUN apk add --no-cache bash sed wget ca-certificates \
 COPY conf /etc/redis/
 COPY bin /usr/local/bin/
 
-CMD [ "/usr/local/bin/redis-launcher.sh" ]
-
-ENTRYPOINT [ "bash", "-c" ]
+ENTRYPOINT ["/usr/local/bin/redis-launcher.sh"]

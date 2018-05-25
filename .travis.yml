@@ -7,5 +7,5 @@ services:
 
 script:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - docker build -t redis:4.0.9 .
-  - docker push redis:4.0.9
+  - docker build -t lixinio/redis:4.0.9 .
+  - docker push lixinio/redis:4.0.9

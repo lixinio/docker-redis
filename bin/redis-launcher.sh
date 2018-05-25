@@ -66,7 +66,7 @@ function launchmaster() {
     sed -i "s/# requirepass/requirepass ${REDIS_PASS} \n#/" $MASTER_CONF
   fi
 
-  redis-server $MASTER_CONF --protected-mode no $@
+  exec redis-server $MASTER_CONF --protected-mode no $@
 }
 
 # Launch sentinel when `SENTINEL` environment variable is set
@@ -105,7 +105,7 @@ function launchsentinel() {
    echo "sentinel auth-pass mymaster $(cat $REDIS_PASSWORD_FILE)" >> ${SENTINEL_CONF}
   fi  
 
-  redis-sentinel ${SENTINEL_CONF} --protected-mode no $@
+  exec redis-sentinel ${SENTINEL_CONF} --protected-mode no $@
 }
 
 # Launch slave when `SLAVE` environment variable is set
@@ -141,7 +141,7 @@ function launchslave() {
 
   sed -i "s/%master-ip%/${MASTER_LB_HOST}/" $SLAVE_CONF
   sed -i "s/%master-port%/${MASTER_LB_PORT}/" $SLAVE_CONF
-  redis-server $SLAVE_CONF --protected-mode no $@
+  exec redis-server $SLAVE_CONF --protected-mode no $@
 }
 
 #Check if MASTER environment variable is set
