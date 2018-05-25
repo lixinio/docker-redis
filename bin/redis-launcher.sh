@@ -45,6 +45,7 @@ HOSTVAR="${ENV_VAR_PREFIX}MASTER_SERVICE_HOST"
 MASTER_LB_PORT="${!PORTVAR}"
 MASTER_LB_HOST="${!HOSTVAR}"
 QUORUM=${QUORUM:-2}
+DOWN_AFTER_MS=${DOWN_AFTER_MS:-10000}
 
 # Only sets AUTH if the ENV var REDIS_PASS is set.
 REDISAUTH=""
@@ -93,7 +94,7 @@ function launchsentinel() {
   done
 
   echo "sentinel monitor mymaster ${MASTER_IP} ${MASTER_LB_PORT} ${QUORUM}" > ${SENTINEL_CONF}
-  echo "sentinel down-after-milliseconds mymaster 10000" >> ${SENTINEL_CONF}
+  echo "sentinel down-after-milliseconds mymaster ${DOWN_AFTER_MS}" >> ${SENTINEL_CONF}
   echo "sentinel failover-timeout mymaster 30000" >> ${SENTINEL_CONF}
   echo "sentinel parallel-syncs mymaster 10" >> ${SENTINEL_CONF}
   echo "bind 0.0.0.0" >> ${SENTINEL_CONF}
